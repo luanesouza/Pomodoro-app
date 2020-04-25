@@ -44,36 +44,47 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}> Timer </Text>
-      {/*<Text style={styles.instructions}>{timer}</Text>*/}
-      <Text style={styles.instructions}>{minutes < 10 ? `0${minutes}` : minutes} : {seconds < 10 ? `0${seconds}`: seconds}</Text>
-      {/*<Text style={styles.instructions}></Text>*/}
-      <Button style={styles.button} onPress={ () => handlePress()} title={clicked ? 'Pause' : 'Start Timer'}/>
+      <Text style={styles.title}> Start Your Pomodore Session </Text>
+      <TouchableOpacity onPress={ () => handlePress()} style={styles.touchable}>
+        <Image
+          source={{uri: clicked ? 'https://icons.iconarchive.com/icons/danieledesantis/audio-video-outline/512/pause-icon.png' :  'https://icons.iconarchive.com/icons/danieledesantis/audio-video-outline/512/play-icon.png'}}
+          style={{width: 100, height: 100}} />
+      </TouchableOpacity>
+      <Text style={styles.timer}>{minutes < 10 ? `0${minutes}` : minutes} : {seconds < 10 ? `0${seconds}`: seconds}</Text>
       <Button onPress={ () => {setMinutes(0); setSeconds(0);}} title={seconds > 0 && !clicked ? 'Reset' : ''}/>
-      <Text style={styles.instructions}>{instructions}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+
   button: {
     width: 100,
     height: 100,
+  },
+  touchable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#6dc0d5',
+    borderRadius: 50,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#ffc2ce',
   },
-  welcome: {
-    fontSize: 20,
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
     textAlign: 'center',
-    margin: 10,
+    marginBottom: 30,
+    width: 220,
   },
-  instructions: {
+  timer: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    fontSize: 40,
+    marginTop: 50,
   },
 });
