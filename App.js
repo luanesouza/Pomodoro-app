@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
-// import Sound from 'react-native-sound';
+import Sound from 'react-native-sound';
 
 const instructions = Platform.select({
   ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
+let sound = require('./scratch.mp3')
 let time = {
   hours: 0,
   minutes: 0,
@@ -18,8 +19,17 @@ export default function App() {
   [clicked, wasClicked] = useState(false);
   [reset, resetTimer] = useState(false);
 
+  [term, playNotification] = useState(10);
+  [intervalId, setIntervalId] = useState('');
+
   [seconds, setSeconds] = useState(0);
   [minutes, setMinutes] = useState(0);
+
+  const _sound = new Sound(sound);
+
+  const _playSound = () => {
+        _sound.play()
+  }
 
   useEffect(() => {
     clicked ? _startTimer() : null
@@ -32,6 +42,7 @@ export default function App() {
   const _startTimer = () => {
     setTimeout(() => {
       setSeconds(seconds+1)
+      minutes === term ? _playSound() : null
 
       if(seconds === 60){
         setSeconds(0)
@@ -40,12 +51,19 @@ export default function App() {
     }, 1000);
   }
 
+  resetTimer = () => {
+      // _playSound()
+      setMinutes(0);
+      setSeconds(0);
+      clearInterval(intervalId)
+  }
+
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Start Your Pomodore Session </Text>
-      <Button title='Notify me after 30 minutes'/>
-      <Button title='Notify me after 1 hour'/>
+      <Button title='Notify me after 30 minutes' onPress={() => playNotification(30)}/>
+      <Button title='Notify me after 1 hour' onPress={() => playNotification(35)}/>
       <TouchableOpacity onPress={ () => handlePress()} style={styles.touchable}>
         <Image
           source={{uri: clicked ? 'https://icons.iconarchive.com/icons/danieledesantis/audio-video-outline/512/pause-icon.png' :  'https://icons.iconarchive.com/icons/danieledesantis/audio-video-outline/512/play-icon.png'}}
