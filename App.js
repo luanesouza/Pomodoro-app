@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
+// import Sound from 'react-native-sound';
 
 const instructions = Platform.select({
   ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
@@ -19,11 +20,9 @@ export default function App() {
 
   [seconds, setSeconds] = useState(0);
   [minutes, setMinutes] = useState(0);
-  // [seconds, setSeconds] = useState(0)
 
   useEffect(() => {
     clicked ? _startTimer() : null
-
   })
 
   const handlePress = () =>  {
@@ -45,6 +44,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Start Your Pomodore Session </Text>
+      <Button title='Notify me after 30 minutes'/>
+      <Button title='Notify me after 1 hour'/>
       <TouchableOpacity onPress={ () => handlePress()} style={styles.touchable}>
         <Image
           source={{uri: clicked ? 'https://icons.iconarchive.com/icons/danieledesantis/audio-video-outline/512/pause-icon.png' :  'https://icons.iconarchive.com/icons/danieledesantis/audio-video-outline/512/play-icon.png'}}
@@ -80,6 +81,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 30,
     width: 220,
+  },
+  content: {
+    fontSize: 15,
+    textAlign: 'center',
+    marginBottom: 30,
   },
   timer: {
     textAlign: 'center',
