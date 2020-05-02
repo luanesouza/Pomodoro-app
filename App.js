@@ -35,14 +35,18 @@ export default function App() {
     clicked ? _startTimer() : null
   })
 
+  useEffect(() => {
+    clearTimeOut(intervalId)
+  }, [])
+
   const handlePress = () =>  {
     wasClicked(!clicked)
   }
 
   const _startTimer = () => {
-    setTimeout(() => {
+    this.setTimeout(() => {
       setSeconds(seconds+1)
-      minutes === term ? _playSound() : null
+      seconds === term ? _playSound() : null
 
       if(seconds === 60){
         setSeconds(0)
@@ -55,7 +59,7 @@ export default function App() {
       // _playSound()
       setMinutes(0);
       setSeconds(0);
-      clearInterval(intervalId)
+      clearTimeOut(intervalId)
   }
 
 
